@@ -62,3 +62,60 @@
 - PaymentProcessor (Xử lý thanh toán): Thực hiện thanh toán cho nhân viên.
 - PaymentMethod (Phương thức thanh toán): Xác định cách mà nhân viên muốn nhận lương.
 # 4. Phân tích ca sử dụng Maintain Timecard
+- Ca sử dụng "Maintain Timecard" cho phép nhân viên nhập, xem, cập nhật và xóa thông tin thời gian làm việc của họ trong hệ thống bảng lương của Acme, Inc.
+1. Mô Tả Ca Sử Dụng
+- Tên Ca Sử Dụng: Maintain Timecard
+- Người Tham Gia: Nhân viên
+- Mục Tiêu: Quản lý thông tin thời gian làm việc.
+- Điều Kiện Bắt Đầu: Nhân viên đăng nhập vào hệ thống.
+- Điều Kiện Kết Thúc: Thông tin thời gian được lưu hoặc xóa thành công.
+* Các Bước Thực Hiện:
+- Nhân viên nhập thông tin thời gian làm việc (ngày, giờ, mã dự án).
+- Hệ thống lưu thông tin vào cơ sở dữ liệu.
+- Nhân viên xem, cập nhật hoặc xóa thông tin thời gian.
+2. Các Lớp Phân Tích
+- Employee
+  + Thuộc tính: employeeID, name, address, paymentMethod
+  + Phương thức: enterTimecard(), viewTimecard(), updateTimecard(), deleteTimecard()
+- Timecard
+  + Thuộc tính: timecardID, employeeID, date, hoursWorked, chargeNumber
+  + Phương thức: save(), update(), delete(), getHours()
+- PayrollAdministrator
+  + Thuộc tính: adminID, name
+  + Phương thức: generateReport()
+- ProjectManagementDatabase
+  + Thuộc tính: dbConnection
+  + Phương thức: fetchChargeNumber()
+3. Biểu đồ tuần tự 
+![Diagram](https://www.planttext.com/api/plantuml/png/Z90n3e9044LxJZ4b97W12XkniD1OS85XzmiO5iZkWk5i5Xx9AmXH40maThl9--_FpFF-sAigBrk0DbkACWN1MWQ4ma8FNrUoXKzfMMlZaqXP9pZLAeRsd87fusTTNY7iaGjEe3f5o9PZDWZe0YlItIJfUiugFXzbsZUh-oA66tJ2vLMQ3BTna_d0Go0WcPagvtR2BSlggh_5YDdFun3wzEUHVbshLH8v5glMVEz0vti1003__mC0)
+4. Biểu đồ lớp
+![Diagram](https://www.planttext.com/api/plantuml/png/R91DYW8n48NtEKMHfT0BjowaONeMBWH1mNNHANk2IKUgIr348yq9cc4MdiGJU8L9gnD_5w5uZthVIt9gV_D6a6NjdL9YnH6CqTOI3yoifnBPG0OV3fi62eiLerUgFCjFlt9XImGx1G1qLQC21Z0LjdNLsJLwUZ3G6AQOJjx-dvVwpZovgYUUGUbuHHoT_0fhRkQ1bsIYkt01vHKuuL36oi0NykeYYpjIZAJNwBw6B1k2xkdRbGQWgsFxRRLALjhhwpTDCR290N277wrKJhNfllWF003__mC0)
+5. Giải thích biểu đồ lớp
+- Các lớp chính:
+  + Employee: Lớp đại diện cho nhân viên, chỉ có các thuộc tính cơ bản như employeeID, name, và address.
+  + Timecard: Lớp biểu diễn thẻ chấm công của nhân viên, với các thuộc tính timecardID, date, và hoursWorked.
+  + TimecardProcessor: Lớp xử lý thông tin thẻ thời gian, có thuộc tính processDate.
+- Quan hệ:
+  + Employee gửi nhiều Timecard.
+  + Timecard được TimecardProcessor xử lý.
+# 5. Hợp nhất kết quả phân tích
+- Ca sử dụng Manage Timecard and Payment kết hợp quản lý thời gian làm việc và xử lý thanh toán cho nhân viên, nhằm nâng cao hiệu quả và tính chính xác trong quản lý nhân sự.
+- Mục Tiêu
+  + Quản lý thời gian làm việc của nhân viên.
+  + Tính toán và xử lý thanh toán lương.
+  + Cung cấp báo cáo chi tiết.
+- Đối Tượng Sử Dụng
+  + Người quản lý nhân sự
+  + Nhân viên kế toán
+- Yêu Cầu Chức Năng
+  + Quản lý thời gian làm việc:-Nhập, sửa đổi và xem lịch sử giờ làm việc.
+  + Tính toán và xử lý thanh toán:-Tính lương và xử lý thanh toán.
+                                  -Cung cấp báo cáo thanh toán.
+- Quy Trình Sử Dụng
+  + Đăng nhập vào hệ thống.
+  + Nhập và chỉnh sửa giờ làm việc cho nhân viên.
+  + Tính toán lương tự động.
+  + Xử lý thanh toán và cung cấp báo cáo.
+- Kết Luận: Hệ thống Manage Timecard and Payment giúp tối ưu hóa quy trình quản lý thời gian làm việc và thanh toán, mang lại lợi ích cho cả người quản lý và nhân viên.
+Biểu đồ:
+![Diagram](https://www.planttext.com/api/plantuml/png/T58zIyH04EttLmpfh_2-IZcvMX4ymNRSh9l5P78c6q74siBAmbBm51iXSBPPv8f8_iV-0l-2sLnKSeTRBCpCUs_cpUwNMKrIZOdEef25uao3ZY5HCj3WgqHmhM9Yo7MSW7SWgwKrZmekCbky48Jb1r1GFXEarhnxW2di8w4KoI-ZgLwgyetWt1QhMhnSK8FSuppEI2DfnbmV91aAyDO2C5EHu9ZuWEJ38Lv5WhG7rmpgawLrAHLEtHRv7AIgXwg7UOhgJjRSyaR_UBhJHHzPaoDytblpeFxbzBkS4n51QCqT3vp577JG-9SAgIKCkeHPcLEmTWbXjQmM95lWS4FPoRa5wW1_62ror4LECvB0RV4wXzDo4GDtrpPhp6uOQzSFlTvkiu1ktD-81nlnaFqzIfiQRQV6Z4q4-Uw_V0C00F__0m00)
