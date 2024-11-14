@@ -1,4 +1,4 @@
-# Sơ đồ Ngữ cảnh Hệ thống con
+# 1. Sơ đồ Ngữ cảnh Hệ thống con
 
 ## 1. BankSystem
 ![Sơ đồ BankSystem](https://www.planttext.com/api/plantuml/png/R58xRiCm3Drz2i9JCkG2Hc5ayD027OAw5r1aeXKgVo9A0OoY9-kG8-KA4IEbbenEaXxVutkaVVszxCaAOrsl2wa54HoC6kmRdXoIXUy204nul3HGGMjz-ODHHsXMqCJIztd233qvePMTCynxMaSvv8wzUXXljhvs7bN75Vc9ygkzA-vurFmKZyHYxd68OQVmM2KJ_UWyeu9cT4UD2R4HbkFo4KOO9HB5bakCnOndRD6SbSHiFQ-As82FftI7TMAMSG9KBxEdgatiwjafdAvb5JLQi23SqknPwjskphzo1UMp63gDLFx3_EjR7e8Zq_OuTFpFt0000F__0m00)
@@ -35,28 +35,93 @@ Hệ thống con **ProjectManagementDatabase** chịu trách nhiệm lưu trữ 
 - **Truy cập Chỉ-đọc**: Cho phép Payroll System truy xuất thông tin dự án mà không làm thay đổi dữ liệu.
 
 ---
-## 2. Ánh xạ lớp phân tích tới phần tử thiết kế
+# 2. Ánh xạ lớp phân tích tới phần tử thiết kế
 
 Bảng dưới đây thể hiện cách các lớp phân tích được ánh xạ sang các phần tử thiết kế của hệ thống. Điều này giúp làm rõ mối quan hệ giữa các khái niệm trong giai đoạn phân tích và các thành phần thực tế trong giai đoạn thiết kế.
 
 | Lớp Phân Tích             | Phần Tử Thiết Kế                                     |
 |---------------------------|------------------------------------------------------|
-| LoginForm                 | LoginForm                                            |
-| MaintainTimecardForm      | MainEmployeeForm, TimecardForm, MainApplicationForm  |
-| TimecardController        | TimecardController                                   |
-| SystemClockInterface      | SystemClockInterface                                 |
-| PayrollController         | PayrollController                                    |
-| Paycheck                  | Paycheck                                             |
+| **LoginForm**             | LoginForm                                            |
+| **MaintainTimecardForm**  | MainEmployeeForm, TimecardForm, MainApplicationForm  |
+| **TimecardController**    | TimecardController                                   |
+| **SystemClockInterface**  | SystemClockInterface                                 |
+| **PayrollController**     | PayrollController                                    |
+| **Paycheck**              | Paycheck                                             |
 
-**Giải thích:**
-- **LoginForm**: Được ánh xạ trực tiếp tới phần tử thiết kế cùng tên, thực hiện chức năng đăng nhập.
-- **MaintainTimecardForm**: Tương ứng với các phần tử thiết kế như `MainEmployeeForm`, `TimecardForm`, và `MainApplicationForm`, chịu trách nhiệm về các thao tác trên thẻ chấm công của nhân viên.
-- **TimecardController**: Điều khiển thao tác và luồng công việc liên quan đến thẻ chấm công, được ánh xạ tới `TimecardController` trong thiết kế.
-- **SystemClockInterface**: Cung cấp giao diện làm việc với đồng hồ hệ thống, đảm bảo các thao tác về thời gian được xử lý chính xác.
-- **PayrollController**: Điều khiển toàn bộ quá trình tính lương, đảm bảo các chức năng thanh toán được thực thi chính xác.
-- **Paycheck**: Tương ứng với phần tử thiết kế `Paycheck`, đại diện cho chứng từ thanh toán của nhân viên.
+**Ví dụ cụ thể:**
+
+1. **LoginForm**  
+   - **Phân tích**: Lớp này chịu trách nhiệm cho việc đăng nhập của nhân viên vào hệ thống.
+   - **Thiết kế**: Được ánh xạ sang phần tử `LoginForm` trong giao diện người dùng, giúp nhân viên nhập tên đăng nhập và mật khẩu để truy cập vào hệ thống.
+
+2. **MaintainTimecardForm**  
+   - **Phân tích**: Lớp này xử lý việc nhập và quản lý thông tin thời gian làm việc của nhân viên.
+   - **Thiết kế**: Được ánh xạ sang ba phần tử trong thiết kế:
+     - `MainEmployeeForm`: Cung cấp giao diện để nhân viên truy cập thông tin cá nhân và các chức năng chính.
+     - `TimecardForm`: Cho phép nhân viên nhập thời gian làm việc vào thẻ chấm công.
+     - `MainApplicationForm`: Khung ứng dụng chính, từ đó nhân viên có thể truy cập các chức năng khác.
+
+3. **TimecardController**  
+   - **Phân tích**: Điều khiển các thao tác xử lý thẻ chấm công, như lưu trữ và kiểm tra thời gian làm việc.
+   - **Thiết kế**: Được ánh xạ trực tiếp sang `TimecardController`, chịu trách nhiệm xử lý các thao tác liên quan đến thẻ chấm công trong hệ thống.
+
+4. **SystemClockInterface**  
+   - **Phân tích**: Lớp này cung cấp giao diện lấy thời gian từ hệ thống, đảm bảo các thao tác về thời gian luôn chính xác.
+   - **Thiết kế**: Được ánh xạ thành `SystemClockInterface` trong thiết kế, cung cấp thời gian hệ thống cho các chức năng cần sử dụng.
+
+5. **PayrollController**  
+   - **Phân tích**: Quản lý quy trình tính lương và xử lý thanh toán cho nhân viên.
+   - **Thiết kế**: Được ánh xạ trực tiếp sang `PayrollController`, xử lý tất cả các thao tác tính toán và quản lý dữ liệu thanh toán trong hệ thống.
+
+6. **Paycheck**  
+   - **Phân tích**: Lớp này đại diện cho chứng từ thanh toán lương của nhân viên.
+   - **Thiết kế**: Được ánh xạ sang `Paycheck`, lưu trữ chi tiết thông tin về thanh toán lương, bao gồm số tiền và phương thức thanh toán.
 
 ---
+# 3. Bảng ánh xạ Phần tử thiết kế vào Gói sở hữu
+
+Dựa trên các yêu cầu của dự án, dưới đây là bảng ánh xạ các phần tử thiết kế vào các gói sở hữu phù hợp:
+
+| Phần tử thiết kế           | "Gói sở hữu"                            |
+|----------------------------|----------------------------------------|
+| LoginForm                  | Middleware::Security::GUI Framework    |
+| MainEmployeeForm           | Applications::Employee Activities      |
+| TimecardForm               | Applications::Employee Activities      |
+| MainApplicationForm        | Middleware::Security::GUI Framework    |
+| TimecardController         | Applications::Payroll                  |
+| SystemClockInterface       | Middleware::Utilities                  |
+| PayrollController          | Applications::Payroll                  |
+| Paycheck                   | Business Services::Payroll Artifacts   |
+| EmployeeReportInterface    | Applications::Employee Reports         |
+| PaymentProcessor           | Business Services::Payment Processing  |
+| ProjectManagementInterface | Middleware::Integration::DB2 Interface |
+
+Bảng này phân chia các phần tử thiết kế chính vào các gói hợp lý trong hệ thống. Các gói được cấu trúc để tách biệt các trách nhiệm, với các interface và controller được nhóm vào các lớp ứng dụng, dịch vụ kinh doanh, hoặc middleware tương ứng.
+
+---
+
+# 4. Các lớp kiến trúc và sự phụ thuộc của chúng
+
+Các lớp kiến trúc cho hệ thống bảng lương có thể được thiết kế dựa trên chức năng và yêu cầu được chỉ định. Dưới đây là sơ đồ các lớp kiến trúc và sự phụ thuộc của chúng:
+
+- **Lớp Giao diện người dùng (Presentation Layer)**: Lớp này xử lý giao diện người dùng, cho phép nhân viên tương tác với hệ thống (ví dụ: nhập thông tin thẻ giờ, truy cập báo cáo, và thay đổi các tùy chọn cá nhân).
+  
+- **Lớp Ứng dụng (Application Layer)**: Lớp này chứa logic nghiệp vụ để xử lý các chức năng bảng lương, bao gồm xử lý thẻ giờ, tính toán hoa hồng và tạo báo cáo.
+  
+- **Lớp Dịch vụ kinh doanh (Business Services Layer)**: Lớp này chịu trách nhiệm về các dịch vụ liên quan đến xử lý bảng lương, như tạo bảng lương và quản lý nhân viên.
+
+- **Lớp Tích hợp (Integration Layer)**: Lớp này tạo điều kiện giao tiếp với các hệ thống bên ngoài, chẳng hạn như Cơ sở dữ liệu Quản lý Dự án DB2, thông qua các interface chuyên dụng.
+
+- **Lớp Truy cập Dữ liệu (Data Access Layer)**: Lớp này quản lý việc lưu trữ dữ liệu, bao gồm truy cập dữ liệu nhân viên, lịch sử bảng lương và thông tin thẻ giờ.
+
+Dưới đây là sơ đồ mô tả các lớp và sự phụ thuộc giữa chúng:
+
+```mermaid
+flowchart TD
+    A[Lớp Giao diện người dùng] --> B[Lớp Ứng dụng]
+    B --> C[Lớp Dịch vụ kinh doanh]
+    B --> D[Lớp Tích hợp]
+    D --> E[Lớp Truy cập Dữ liệu]
 
 
 
