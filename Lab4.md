@@ -1,4 +1,4 @@
-
+# 1.
 ## 1. Nhập thông tin thời gian làm việc
 
 **Lý do thiết kế:**
@@ -80,3 +80,69 @@
 ![Diagram](https://www.planttext.com/api/plantuml/png/P90z3e9044RxFSM4dWjG6A8q5YH4JZ0k8wxP7zoTDU5i5Xx9AxW8XM3xpVjUPkRzV9M1qNCqMh1YJN0YzeeU18rtDv8CHtjntY0hPuKO4gka6j0oP0sEtcaDxHYOJ0OOO8dcP4CllXejzcGePHKodZ7GNAshlH0h0UIxRroahUwH0eEyeky9fEieY6a4-SJybWfeoNORyi-wRXnGowYH2ORbfXYKxTUICccdFtq0003__mC0)
 
 ---
+# 2.
+### 1. Sơ đồ Ngữ cảnh Hệ thống con
+
+#### **1. BankSystem**
+Hệ thống **BankSystem** quản lý tất cả giao dịch ngân hàng, tích hợp với các dịch vụ bên ngoài và Payroll System để đảm bảo thanh toán an toàn cho nhân viên. Các chức năng chính bao gồm quản lý tài khoản ngân hàng và xử lý giao dịch.
+
+![Diagram](https://www.planttext.com/api/plantuml/png/R90z2W8n48Nxd29OQU45BCGVjXI45ViX3XBCJYGpaLt4arbu9AzWDgwQmYdVVFFcyPxtnu85WiJ6gJEO4nnHZrP0fxfZmMQahqgdCGwOTQylZV6HP0EKq0P91YBFMosmyIGlRuN9BW0n6B6Uji4RPBPqB4q6jU1uiCcp1sSF8BY5hd_FVrxKQ6AmqgrzStOMo63fNn77a4Ecnp_awtDJAda7xzox0psTplMl4Ztx9DIV2AhOzd3L2WO2bsKC5vleT5QrAPTWsG2h1TAXB_y5003__mC0)
+ 
+
+---
+
+#### **2. PrintService**
+Hệ thống **PrintService** chịu trách nhiệm in phiếu lương và các báo cáo liên quan. Nó kết nối với Payroll System để đảm bảo tài liệu in được định dạng chính xác.
+
+ ![Diagram](https://www.planttext.com/api/plantuml/png/h54x3i8m3Drp2ei997A1ggeOM5WGKazWKWCL-LI9YwYW9sFWI5o1KCgdp7YmhFVivz_jSfq5Hi-rqQ92jSSjmMZbIyiv-KEfQ0Gd0T4YGdw3Yc3nJVTiPzK37-CA6xKZjK_W5Kt1sQw8V08vnsWxwShQpYkD8S10DKqhxuvDblrHlq-EscIvvA6u95Dfrn0jqT1BvCEYSRNb10fNhpLzy08vPi-Zx_krGiH6tccTDu79W9JPpyMIvwhlWO8OykbPoi4rn8niyNZG7G00__y30000)
+
+---
+
+#### **3. ProjectManagementDatabase**
+Hệ thống **ProjectManagementDatabase** quản lý dữ liệu dự án, gồm mã charge và chi phí. Nó chỉ cung cấp quyền truy cập đọc cho Payroll System.
+
+ ![Diagram](https://www.planttext.com/api/plantuml/png/T9112i9034NtSuhWIXUzW0jfKSIDMAeNYDFGLgSpCaaBHJoP2u_a5Mnbq2uqkqzUNaYUzqVCWbwQsgWBwZCM19FKknDfsQBjOqrMLYXuHAO9N1NqfGqomx94Nz3IvVGb0_2kZCHNr5AYfMhfI_DqzePk8rTOcHZZD4hbx5YKC5U5tRZ6yy45yfSa8yntrdI9rjJ7aM5DeiimEHpp6RufbMBddJ7xZeLgYA85_BqVvX3S0O6XesAo-V305m000F__0m00)
+ 
+---
+
+### 2. Ánh xạ lớp phân tích tới phần tử thiết kế
+
+| **Lớp Phân Tích**         | **Phần Tử Thiết Kế**                                  |
+|---------------------------|------------------------------------------------------|
+| **LoginForm**             | LoginForm                                            |
+| **MaintainTimecardForm**  | MainEmployeeForm, TimecardForm, MainApplicationForm  |
+| **TimecardController**    | TimecardController                                   |
+| **SystemClockInterface**  | SystemClockInterface                                 |
+| **PayrollController**     | PayrollController                                    |
+| **Paycheck**              | Paycheck                                             |
+
+---
+
+### 3. Bảng ánh xạ Phần tử thiết kế vào Gói sở hữu
+
+| **Phần Tử Thiết Kế**       | **Gói Sở Hữu**                                      |
+|----------------------------|----------------------------------------------------|
+| LoginForm                  | Middleware::Security::GUI Framework                |
+| MainEmployeeForm           | Applications::Employee Activities                  |
+| TimecardForm               | Applications::Employee Activities                  |
+| MainApplicationForm        | Middleware::Security::GUI Framework                |
+| TimecardController         | Applications::Payroll                              |
+| SystemClockInterface       | Middleware::Utilities                              |
+| PayrollController          | Applications::Payroll                              |
+| Paycheck                   | Business Services::Payroll Artifacts               |
+| EmployeeReportInterface    | Applications::Employee Reports                     |
+| PaymentProcessor           | Business Services::Payment Processing              |
+| ProjectManagementInterface | Middleware::Integration::DB2 Interface             |
+
+---
+
+### 4. Các lớp kiến trúc và sự phụ thuộc của chúng
+
+- **UI (Giao diện người dùng)**: Xử lý tất cả thao tác từ nhân viên như nhập giờ làm, xem báo cáo.
+- **App (Ứng dụng)**: Chứa logic nghiệp vụ như xử lý thẻ giờ, tính toán bảng lương.
+- **BS (Dịch vụ kinh doanh)**: Quản lý dịch vụ như tạo bảng lương, quản lý thanh toán.
+- **Integration (Tích hợp)**: Giao tiếp với các hệ thống như DB2 hoặc ngân hàng.
+- **DAL (Truy cập dữ liệu)**: Lưu trữ và truy xuất thông tin bảng lương, nhân viên.
+
+ ![Diagram](https://www.planttext.com/api/plantuml/png/X99VQeD048VVFSMIzrmXn2O40WO2IGymJAPsw_wHsKb1Ia_MXnwfLwXhiAwD4b-Kttpxc-N3dw_lTH1WkLgJrO0LbAGMptjLG4EyK1-PQXyq488gVAdTphDDihEsXC2NBlxCXegyher64EtTLDSH6lR6RBoJ-2QUw4o6QVFJDMX7BNSYVjT8OQOVNmchSMJ9oP5zUoRuSUdU2PKyVrtsRuHo0DVIiINo_0982NHgWf3T68_LC4wNR450vHZNJotPvaN4_pIhvN8r9IDr_eWPeewyrtwNzDnDN__HfsE3_uCRDUzgVjITZ0BMv2xnN_m5003__mC0)
+
